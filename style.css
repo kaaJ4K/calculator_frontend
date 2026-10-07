@@ -1,91 +1,280 @@
-body {
+*{
 
-    font-family: Arial, sans-serif;
+box-sizing:border-box;
 
-    background: #f2f2f2;
-
-}
-
-
-
-.container {
-
-    width: 350px;
-
-    margin: 50px auto;
-
-    background: white;
-
-    padding: 20px;
-
-    border-radius: 15px;
-
-    box-shadow: 0 0 10px gray;
+font-family:"Segoe UI",Arial,sans-serif;
 
 }
 
 
 
-h1 {
+body{
 
-    text-align: center;
+
+margin:0;
+
+min-height:100vh;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+
+background:
+
+linear-gradient(
+135deg,
+#667eea,
+#764ba2
+);
+
 
 }
 
 
 
-#display {
+.calculator{
 
-    height: 60px;
 
-    background: #222;
+width:430px;
 
-    color: white;
+padding:35px;
 
-    font-size: 35px;
 
-    text-align: right;
+background:white;
 
-    padding: 10px;
 
-    border-radius: 10px;
+border-radius:35px;
 
-    margin-bottom: 20px;
 
-    overflow: hidden;
+box-shadow:
+
+0 25px 60px rgba(0,0,0,.25);
+
 
 }
 
 
 
-.buttons {
+h1{
 
-    display: grid;
 
-    grid-template-columns: repeat(4, 1fr);
+text-align:center;
 
-    gap: 10px;
+font-size:48px;
+
+margin:0 0 25px;
+
+color:#222;
+
 
 }
 
 
 
-button {
 
-    height: 50px;
+#display{
 
-    font-size: 20px;
 
-    border-radius: 8px;
+height:90px;
 
-    cursor: pointer;
+
+background:#f4f6ff;
+
+
+border-radius:20px;
+
+
+font-size:45px;
+
+
+padding:20px;
+
+
+text-align:right;
+
+
+overflow:hidden;
+
+
+color:#111;
+
 
 }
 
 
 
-#history {
+.buttons{
 
-    margin-top: 20px;
+
+display:grid;
+
+
+grid-template-columns:repeat(4,1fr);
+
+
+gap:15px;
+
+
+margin-top:25px;
+
 
 }
+
+
+
+button{
+
+
+height:70px;
+
+
+border:none;
+
+
+border-radius:20px;
+
+
+font-size:25px;
+
+
+cursor:pointer;
+
+
+background:#eef2ff;
+
+
+color:#222;
+
+
+transition:.2s;
+
+
+}
+
+
+
+button:hover{
+
+
+transform:scale(1.05);
+
+
+}
+
+
+
+.function{
+
+
+background:#ef4444;
+
+color:white;
+
+
+}
+
+
+
+.operator{
+
+
+background:#6366f1;
+
+color:white;
+
+
+}
+
+
+
+.plus{
+
+
+background:#ec4899;
+
+color:white;
+
+
+}
+
+
+
+.history-refresh{
+
+
+width:100%;
+
+
+margin-top:15px;
+
+
+height:55px;
+
+
+background:#6366f1;
+
+
+color:white;
+
+
+font-size:20px;
+
+
+}
+
+
+
+.history-item{
+
+
+display:flex;
+
+
+justify-content:space-between;
+
+
+align-items:center;
+
+
+background:#f3f4ff;
+
+
+margin-top:12px;
+
+
+padding:12px;
+
+
+border-radius:15px;
+
+
+font-size:18px;
+
+
+}
+
+
+
+.delete-btn{
+
+
+height:35px;
+
+
+width:80px;
+
+
+font-size:14px;
+
+
+background:#ef4444;
+
+
+color:white;
+
+
+}
+

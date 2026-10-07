@@ -1,231 +1,284 @@
-let expression = "";
-
-const backendURL = "http://127.0.0.1:5000";
+let expression="";
 
 
-// 显示内容
-function updateDisplay() {
-
-    const display =
-        document.getElementById("display");
-
-    display.innerText =
-        expression === "" ? "0" : expression;
-
-}
+const display=document.getElementById("display");
 
 
-// 输入数字和符号
-function addValue(value) {
 
-    expression += value;
+function updateDisplay(){
 
-    updateDisplay();
+
+if(expression===""){
+
+display.innerText="0";
 
 }
 
+else{
 
-// 清空
-function clearDisplay() {
-
-    expression = "";
-
-    updateDisplay();
+display.innerText=expression;
 
 }
 
-
-// 删除最后一个字符
-function deleteLast() {
-
-    expression =
-        expression.substring(
-            0,
-            expression.length - 1
-        );
-
-    updateDisplay();
 
 }
 
 
 
-// 计算
-async function calculate() {
+
+function appendValue(value){
 
 
-    if(expression === ""){
-
-        return;
-
-    }
+expression += value;
 
 
-    try {
+updateDisplay();
 
-
-        const response =
-            await fetch(
-                backendURL + "/api/calculate",
-                {
-
-                    method:"POST",
-
-                    headers:{
-                        "Content-Type":"application/json"
-                    },
-
-                    body:JSON.stringify({
-
-                        expression:expression
-
-                    })
-
-                }
-            );
-
-
-
-        const data =
-            await response.json();
-
-
-
-        if(data.success){
-
-
-            expression =
-                String(data.result);
-
-
-            updateDisplay();
-
-
-            loadHistory();
-
-
-        }
-
-        else{
-
-
-            alert(data.message);
-
-
-        }
-
-
-    }
-
-    catch(error){
-
-
-        alert(
-            "Backend connection failed"
-        );
-
-
-        console.log(error);
-
-    }
 
 }
 
 
 
-// 获取历史
+
+function clearDisplay(){
+
+
+expression="";
+
+
+updateDisplay();
+
+
+}
+
+
+
+
+function deleteLast(){
+
+
+expression = expression.slice(0,-1);
+
+
+updateDisplay();
+
+
+}
+
+
+
+
+async function calculate(){
+
+
+
+if(expression==="") return;
+
+
+
+try{
+
+
+let response = await fetch(
+
+"http://127.0.0.1:5000/api/calculate",
+
+{
+
+method:"POST",
+
+headers:{
+
+"Content-Type":"application/json"
+
+},
+
+
+body:JSON.stringify({
+
+expression:expression
+
+})
+
+
+}
+
+);
+
+
+
+let data = await response.json();
+
+
+
+if(data.success){
+
+
+expression=data.result.toString();
+
+
+updateDisplay();
+
+
+loadHistory();
+
+
+}
+
+else{
+
+
+alert(data.message);
+
+
+}
+
+
+
+}
+
+catch(error){
+
+
+alert(
+"Backend connection failed"
+);
+
+
+}
+
+
+}
+
+
+
+
+
+
 async function loadHistory(){
 
 
-    const response =
-        await fetch(
-            backendURL + "/api/history"
-        );
+
+try{
 
 
-    const data =
-        await response.json();
+let response = await fetch(
 
+"http://127.0.0.1:5000/api/history"
 
-
-    const history =
-        document.getElementById("history");
+);
 
 
 
-    history.innerHTML = "";
+let data = await response.json();
 
 
 
-    data.forEach(item => {
+let history=document.getElementById("history");
 
 
-        history.innerHTML += `
-
-        <div>
-
-            <p>
-            ${item.expression}
-            =
-            ${item.result}
-
-            <br>
-
-            ${item.created_at}
-
-            </p>
+history.innerHTML="";
 
 
-            <button onclick="deleteHistory(${item.id})">
 
-            Delete
-
-            </button>
+data.forEach(item=>{
 
 
-        </div>
+history.innerHTML += `
 
-        <hr>
-
-        `;
+<div class="history-item">
 
 
-    });
+<span>
+
+${item.expression}
+
+=
+
+${item.result}
+
+</span>
+
+
+<button class="delete-btn"
+
+onclick="deleteHistory(${item.id})">
+
+Delete
+
+</button>
+
+
+</div>
+
+
+`;
+
+
+});
+
+
+}
+
+catch(error){
+
+
+console.log(error);
+
+
+}
 
 
 }
 
 
 
-// 删除历史
+
+
 async function deleteHistory(id){
 
 
-    await fetch(
-
-        backendURL +
-        "/api/history/" +
-        id,
-
-        {
-
-            method:"DELETE"
-
-        }
-
-    );
+try{
 
 
-    loadHistory();
+await fetch(
+
+"http://127.0.0.1:5000/api/history/"+id,
+
+{
+
+method:"DELETE"
+
+}
+
+);
+
+
+
+loadHistory();
+
+
+
+}
+
+catch(error){
+
+
+console.log(error);
+
+
+}
 
 
 }
 
 
 
-// 页面打开自动读取
-window.onload = function(){
 
-    loadHistory();
+window.onload=function(){
 
-};
+
+loadHistory();
+
+
+}
